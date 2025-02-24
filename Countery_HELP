@@ -1,0 +1,78 @@
+from docx import Document
+
+# Vytvoření dokumentu
+doc = Document()
+
+# Přidání nadpisu
+doc.add_heading('Nápověda k použití counterů v PLC Tecomat v jazyce ST (Structured Text)', level=1)
+
+# Úvodní text
+doc.add_heading('1. Úvod', level=2)
+doc.add_paragraph("Countery (počítadla) v PLC Tecomat slouží k zaznamenání a vyhodnocování počtu událostí. "
+                  "Jsou užitečné například pro sledování počtu impulsů, cyklů nebo jiných opakujících se procesů.")
+
+# Typy counterů
+doc.add_heading('2. Typy counterů v Tecomat', level=2)
+doc.add_paragraph("V prostředí Mosaic lze v jazyce ST použít dvě hlavní kategorie counterů:\n"
+                  "- CTU (Count Up) – Počítadlo nahoru (inkrementační).\n"
+                  "- CTD (Count Down) – Počítadlo dolů (dekrementační).\n"
+                  "- CTUD (Count Up/Down) – Obousměrné počítadlo.")
+
+# Použití counterů
+doc.add_heading('3. Použití counterů v jazyce ST', level=2)
+
+doc.add_heading('3.1 Příklad CTU (Count Up)', level=3)
+doc.add_paragraph("VAR\n"
+                  "    counterCTU : CTU; (* Deklarace počítadla *)\n"
+                  "    CU_Input   : BOOL; (* Vstup pro inkrementaci *)\n"
+                  "    Reset      : BOOL; (* Reset počítadla *)\n"
+                  "END_VAR\n\n"
+                  "counterCTU(CU := CU_Input, R := Reset, PV := 10);\n"
+                  "IF counterCTU.Q THEN\n"
+                  "    (* Akce po dosažení hodnoty PV *)\n"
+                  "END_IF;", style='Normal')
+
+doc.add_heading('3.2 Příklad CTD (Count Down)', level=3)
+doc.add_paragraph("VAR\n"
+                  "    counterCTD : CTD;\n"
+                  "    CD_Input   : BOOL;\n"
+                  "    Reset      : BOOL;\n"
+                  "END_VAR\n\n"
+                  "counterCTD(CD := CD_Input, R := Reset, PV := 10);\n"
+                  "IF counterCTD.Q THEN\n"
+                  "    (* Akce po dosažení nuly *)\n"
+                  "END_IF;", style='Normal')
+
+doc.add_heading('3.3 Příklad CTUD (Count Up/Down)', level=3)
+doc.add_paragraph("VAR\n"
+                  "    counterCTUD : CTUD;\n"
+                  "    CU_Input    : BOOL;\n"
+                  "    CD_Input    : BOOL;\n"
+                  "    Reset       : BOOL;\n"
+                  "END_VAR\n\n"
+                  "counterCTUD(CU := CU_Input, CD := CD_Input, R := Reset, PV := 10);\n"
+                  "IF counterCTUD.Q THEN\n"
+                  "    (* Akce po dosažení hodnoty PV *)\n"
+                  "END_IF;", style='Normal')
+
+# Vysvětlení parametrů
+doc.add_heading('4. Vysvětlení parametrů', level=2)
+doc.add_paragraph("- CU – Vstup pro zvýšení hodnoty počítadla.\n"
+                  "- CD – Vstup pro snížení hodnoty počítadla.\n"
+                  "- R – Reset počítadla.\n"
+                  "- PV – Přednastavená hodnota, při jejímž dosažení se aktivuje výstup Q.\n"
+                  "- Q – Logický výstup indikující dosažení hodnoty PV.")
+
+# Shrnutí
+doc.add_heading('5. Shrnutí', level=2)
+doc.add_paragraph("Countery jsou klíčové pro sledování a řízení procesů v PLC Tecomat. "
+                  "V jazyce ST je lze snadno implementovat pomocí standardizovaných bloků `CTU`, `CTD` a `CTUD`. "
+                  "Každý blok nabízí možnost resetu a přednastavení limitu, což usnadňuje jejich použití v automatizačních aplikacích.\n\n"
+                  "Tento dokument poskytuje základní informace pro práci s countery v prostředí PLC Tecomat v jazyce Structured Text. "
+                  "Pro podrobnější informace doporučujeme nahlédnout do oficiální dokumentace Mosaic.")
+
+# Uložení souboru
+file_path = "/mnt/data/plc_tecomat_counters.docx"
+doc.save(file_path)
+
+file_path
